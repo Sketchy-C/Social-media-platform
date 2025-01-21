@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-)nxu&j8-u=en6-jn#-_wc3$l$2hcii(9dlozx+%b__f+%(iq!1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -75,16 +76,20 @@ WSGI_APPLICATION = 'socialmedia.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'photo_gallery_db',
-        'USER': 'viewer',
-        'PASSWORD': '123456',
-        'HOST': 'localhost',
-        'PORT':'5432',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'photo_gallery_db',
+#         'USER': 'viewer',
+#         'PASSWORD': '123456',
+#         'HOST': 'localhost',
+#         'PORT':'5432',
+#     }
+# }
+
+DATABASES={
+    'default':dj_database_url.parse("postgresql://calorie_rho0_user:lEUDdNOHbSE4IFQ6zF1k1UEEHymEcFCw@dpg-ctv4c2dds78s738nh3q0-a.oregon-postgres.render.com/calorie_rho0")
+} 
 
 
 
