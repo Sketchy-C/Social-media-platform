@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login as auth_login, logout, authenticate
-from .models import Profile, Post, LikePost, Followers
+from .models import Profile, Post, LikePost, Followers,Comment
 from django.db import IntegrityError
 from django.db.models import Q
-
+from .forms import CommentForm
 
 
 def login(request):
@@ -211,3 +211,28 @@ def search_results(request):
         'posts': posts,
     }
     return render(request, 'search_user.html', context)
+
+def comment(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    comments = post.comments.all()
+    form = CommentForm()
+    # postobj = Post.objects.get(id=id)
+    profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.post = post
+            new_comment.user = request.user
+            new_comment.save()
+            return redirect(f'/comment/{post.id}')
+
+    context = {
+        'post': post,
+        'comments': comments,
+        'form': form,
+        'profile':profile,
+    }
+
+    return render(request, 'post_detail.html', context)

@@ -11,7 +11,7 @@
             <div class="col col-lg-9 col-xl-7">
                 <div class="card p-full">
                     {% for pos in post %}
-                    <div class="container" id="{{pos.id}}">
+                    <a class="container" id="{{ pos.id }}" href="{% url 'comment' pos.id %}">
                         <div class="row">
                             <div class="w-[600px] ">
                                 <div class="post-card bg-blue-200 pb-3 m-2 rounded-2xl overflow-hidden">
@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                     {% endfor %}
 
                 </div>

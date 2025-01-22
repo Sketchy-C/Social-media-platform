@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Post Details{% endblock %}
+
+{% block comments %}
+<div class="comments-section">
+    <h3>Comments</h3>
+
+    {% for comment in comments %}
+        <div class="comment">
+            <p><a href="/profile/{{post.user}}"><strong>@{{ comment.user.username }}:</strong></a> {{ comment.text }}</p>
+            <p class="text-muted">{{ comment.created_at }}</p>
+        </div>
+    {% endfor %}
+
+    <form method="POST" action="{% url 'comment' post.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Post Comment</button>
+    </form>
+</div>
+{% endblock %}
+{% block content %}
+
+<div class="container" id="{{ pos.id }}">
+    <div class="row">
+        <div class="w-[600px] ">
+            <div class="post-card bg-blue-200 pb-3 m-2 rounded-2xl overflow-hidden">
+                <img src="{{post.image.url}}" alt="Post Image"
+                    class="post-image w-[600px] h-[300px] object-cover ">
+                <div class="post-content" style="margin-left: 19px;">
+                    <h5><a href="/profile/{{post.user}}" style="text-decoration: none;"
+                            class="text-[15px] bg-blue-600 text-white rounded-full p-1 shadow-md">@{{post.user}}</a>
+                    </h5>
+                    <p class="m-2 text-[20px]">{{post.caption}}</p>
+                    <p class="text-muted">Posted on: {{post.create_at}}</p>
+                    <hr class="m-2">
+                    <div class="d-flex justify-content-between"
+                        style="margin-bottom: 8px; margin-right:10px;">
+
+                        <a href="/like-post/{{post.id}}/" class="btn btn-outline-primary">Like</a>
+
+                        {% if post.no_of_likes == 0 %}
+                        <p>0</p>
+                        {% elif post.no_of_likes == 1 %}
+                        <p>Liked by {{post.no_of_likes}} person</p>
+                        {% else %}
+                        <p>Liked by {{post.no_of_likes}} people</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
