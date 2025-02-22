@@ -70,7 +70,6 @@ def upload(request):
         return redirect('/')
     
 
-
 def home(request):
     post = Post.objects.all().order_by('create_at').reverse()
     profile = Profile.objects.get(user=request.user)
